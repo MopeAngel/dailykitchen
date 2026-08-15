@@ -4,3 +4,4 @@ pandas
 kagglehub
 openai
 python-dotenv
+Flask-Limiter

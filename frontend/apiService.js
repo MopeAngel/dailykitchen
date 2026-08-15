@@ -14,10 +14,16 @@
  * ============================================================================
  */
 
+// Determine if running locally or in production (Netlify)
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+// TODO: Replace this with your actual deployed Flask backend URL (e.g., on Render, Heroku, or PythonAnywhere)
+const PROD_BACKEND_URL = 'https://your-backend-url.onrender.com'; 
+const BACKEND_URL = isLocal ? 'http://localhost:5000' : PROD_BACKEND_URL;
+
 const KAGGLE_AI_CONFIG = {
     // New unified endpoint for real AI + Kaggle recommendations
-    API_ENDPOINT: 'http://localhost:5000/api/recommend-recipes',
-    HEALTH_ENDPOINT: 'http://localhost:5000/api/health',
+    API_ENDPOINT: `${BACKEND_URL}/api/recommend-recipes`,
+    HEALTH_ENDPOINT: `${BACKEND_URL}/api/health`,
     DATASET_REF: 'prashantsingh001/recipes-dataset-64k-dishes',
     TIMEOUT_MS: 30000, // 30s — OpenAI may take a moment on first call
 };
@@ -84,7 +90,7 @@ async function fetchAIRecipesFromBackend(inputData) {
         console.error('[AI Service] Backend error:', error.message);
         throw new Error(
             `Cannot reach the Flask backend at ${KAGGLE_AI_CONFIG.API_ENDPOINT}. ` +
-            'Make sure you ran: python app.py'
+            (isLocal ? 'Make sure you ran: python app.py locally.' : 'Make sure your production backend is running and PROD_BACKEND_URL is set correctly.')
         );
     }
 }

@@ -36,6 +36,8 @@ import logging
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import pandas as pd
 import kagglehub
 from dotenv import load_dotenv
@@ -43,6 +45,7 @@ from dotenv import load_dotenv
 # ── Load environment variables ──────────────────────────────────────────────
 load_dotenv()
 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "*")  # Default to * for local dev, change to real URL in prod
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
 # ── OpenAI client setup ───────────────────────────────────────────────────
@@ -61,7 +64,21 @@ else:
 
 # ── Flask app setup ──────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app)
+
+# Restrict CORS to FRONTEND_URL
+if FRONTEND_URL == "*":
+    CORS(app)
+else:
+    CORS(app, origins=[FRONTEND_URL])
+
+# Rate Limiting setup (e.g., 50 per day, 10 per hour per IP)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://"
+)
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -473,6 +490,7 @@ def build_recipe_response(candidate: dict) -> dict:
 
 # ── Main endpoint ────────────────────────────────────────────────────────────
 @app.route("/api/recommend-recipes", methods=["POST"])
+@limiter.limit("10 per minute")  # Specific limit for this AI endpoint
 def recommend_recipes():
     """
     POST body:
@@ -593,11 +611,22 @@ def recommend_recipes():
     # ── Step 4: Build response ────────────────────────────────────────────────
     response_recipes = [build_recipe_response(r) for r in ranked]
 
-    return jsonify({
-        "recipes": response_recipes,
-        "total_candidates": total_candidates,
-        "ai_used": openai_client is not None,
-    })
+    try:
+        return jsonify({
+            "recipes": response_recipes,
+            "total_candidates": total_candidates,
+            "ai_used": openai_client is not None,
+        })
+    except Exception as e:
+        logger.error(f"Error generating JSON response: {e}")
+        return jsonify({"error": "Unable to generate recommendations right now. Please try again."}), 500
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    # Log the exception for the backend developer
+    logger.error(f"Unhandled exception: {e}")
+    # Return a generic safe error to the frontend to avoid leaking internals
+    return jsonify({"error": "Unable to generate recommendations right now. Please try again."}), 500
 
 
 # ── Legacy endpoint alias (for backwards compatibility) ──────────────────────
