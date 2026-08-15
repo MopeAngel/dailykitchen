@@ -1,0 +1,768 @@
+/* ==========================================================================
+   HEALTHY RECIPE AI - CUSTOM CSS STYLESHEET
+   Style guide: Modern Glassmorphism, Dark Emerald Theme, Micro-animations
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS DESIGN TOKENS & VARIABLE DECLARATIONS
+   -------------------------------------------------------------------------- */
+:root {
+    --bg-dark: #FFFDF8;
+    --bg-dark-slate: #CFE8CF;
+    --bg-dark-card: #FFFFFF;
+    --bg-modal: #FFFFFF;
+    
+    /* Brand Emerald & Orange Accent Colors */
+    --emerald: #7FB77E;
+    --emerald-dark: #355E3B;
+    --emerald-light: #CFE8CF;
+    --emerald-subtle: rgba(127, 183, 126, 0.15);
+    --emerald-glow: rgba(127, 183, 126, 0.35);
+
+    /* Orange Accent Colors for Healthy Energy Vibe */
+    --orange-accent: #F4A261;
+    --orange-dark: #e76f51;
+    --orange-subtle: rgba(244, 162, 97, 0.15);
+    --orange-glow: rgba(244, 162, 97, 0.4);
+
+    /* Text Colors */
+    --text-main: #333333;
+    --text-muted: #666666;
+    
+    /* Yellow Accent */
+    --yellow-accent: #F6D365;
+    
+    /* Typography */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. GENERAL & GLOBAL RESETS
+   -------------------------------------------------------------------------- */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px; /* Sticky navbar offset */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--emerald-dark);
+}
+
+/* Color Utilities & Custom Utility Classes */
+.text-emerald { color: var(--emerald) !important; }
+.bg-emerald { background-color: var(--emerald) !important; }
+.bg-emerald-subtle { background-color: var(--emerald-subtle) !important; }
+.border-emerald { border-color: var(--emerald) !important; }
+
+/* Orange Accent Utilities */
+.text-orange-accent { color: var(--orange-accent) !important; }
+.bg-orange-accent { background-color: var(--orange-accent) !important; }
+.bg-orange-subtle { background-color: var(--orange-subtle) !important; }
+.border-orange-accent { border-color: var(--orange-accent) !important; }
+
+.text-light-muted { color: var(--text-muted) !important; }
+.bg-dark-slate { background-color: var(--bg-dark-slate) !important; }
+.bg-dark-modal { background-color: var(--bg-modal) !important; }
+.fs-7 { font-size: 0.85rem !important; }
+.fs-8 { font-size: 0.75rem !important; }
+
+/* Gradient Text Effect */
+.text-gradient-emerald {
+    background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.text-gradient-orange {
+    background: linear-gradient(135deg, var(--yellow-accent) 0%, var(--orange-accent) 50%, var(--orange-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Containers */
+.bg-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(53, 94, 59, 0.15);
+    box-shadow: 0 8px 32px rgba(53, 94, 59, 0.05);
+}
+.bg-dark-glass {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(53, 94, 59, 0.15);
+    color: var(--text-main);
+}
+.bg-emerald-dark-glass {
+    background: rgba(127, 183, 126, 0.15);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(53, 94, 59, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   3. NAVBAR STYLING
+   -------------------------------------------------------------------------- */
+.navbar {
+    border-bottom: 1px solid rgba(53, 94, 59, 0.15);
+    transition: all 0.3s ease;
+}
+.brand-icon-wrapper {
+    width: 38px;
+    height: 38px;
+    background: var(--emerald-subtle);
+    border: 1px solid var(--emerald);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-link {
+    color: var(--text-muted) !important;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.nav-link:hover, .nav-link.active {
+    color: var(--emerald) !important;
+}
+
+.btn-outline-emerald {
+    color: var(--emerald);
+    border-color: var(--emerald);
+    background: transparent;
+    transition: all 0.3s ease;
+}
+.btn-outline-emerald:hover {
+    background: var(--emerald);
+    color: #0f172a;
+    box-shadow: 0 0 15px var(--emerald-glow);
+}
+
+.btn-emerald {
+    background: var(--emerald);
+    color: #0f172a !important;
+    font-weight: 600;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-emerald:hover {
+    background: var(--emerald-dark);
+    color: #ffffff;
+    box-shadow: 0 0 20px var(--emerald-glow);
+}
+
+/* Orange Accent Button */
+.btn-chat-orange {
+    background: linear-gradient(135deg, var(--orange-accent) 0%, var(--orange-dark) 100%);
+    color: #ffffff !important;
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-chat-orange:hover {
+    background: linear-gradient(135deg, var(--orange-dark) 0%, #d46a2a 100%);
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(244, 162, 97, 0.4) !important;
+}
+.glow-orange {
+    box-shadow: 0 0 20px rgba(244, 162, 97, 0.3);
+}
+
+/* Chat Utilities */
+.max-w-85 { max-width: 85%; }
+.max-w-75 { max-width: 75%; }
+
+.chat-recipe-card {
+    background: var(--bg-dark-card);
+    border: 1px solid rgba(127, 183, 126, 0.3);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+.chat-recipe-card:hover {
+    border-color: var(--emerald);
+    box-shadow: 0 10px 25px rgba(53, 94, 59, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   4. HERO SECTION & HERO CIRCLE STYLING
+   -------------------------------------------------------------------------- */
+.hero-wrapper {
+    background: radial-gradient(circle at 10% 20%, rgba(127, 183, 126, 0.2) 0%, transparent 55%),
+                radial-gradient(circle at 90% 80%, rgba(244, 162, 97, 0.15) 0%, transparent 55%);
+}
+
+/* Hero Circle Food Image Styling */
+.hero-circle-outer {
+    width: 320px;
+    height: 320px;
+    position: relative;
+    border-radius: 50%;
+    padding: 8px;
+    background: linear-gradient(135deg, var(--emerald) 0%, var(--orange-accent) 100%);
+    box-shadow: 0 20px 40px rgba(53, 94, 59, 0.12), 0 0 35px rgba(127, 183, 126, 0.25);
+    animation: floatCircle 6s ease-in-out infinite;
+}
+@media (min-width: 992px) {
+    .hero-circle-outer {
+        width: 380px;
+        height: 380px;
+    }
+}
+@keyframes floatCircle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+}
+
+.hero-circle-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg-dark-slate);
+    border: 4px solid var(--bg-dark);
+}
+
+.hero-circle-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.hero-circle-outer:hover .hero-circle-img {
+    transform: scale(1.08);
+}
+
+.hero-circle-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 25px;
+    background: var(--orange-accent);
+    color: #ffffff;
+    padding: 6px 16px;
+    border-radius: 50rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(244, 162, 97, 0.3);
+}
+.hero-card-glass {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(127, 183, 126, 0.3);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(53, 94, 59, 0.08);
+    animation: floatCard 6s ease-in-out infinite;
+}
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.hero-img-shadow {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   5. PANTRY INGREDIENT CHIPS & INPUT
+   -------------------------------------------------------------------------- */
+.search-input-group {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.chip-item {
+    cursor: pointer;
+    user-select: none;
+    padding: 6px 14px;
+    border-radius: 50rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: rgba(127, 183, 126, 0.08);
+    border: 1px solid rgba(53, 94, 59, 0.15);
+    color: var(--text-main);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.chip-item:hover {
+    border-color: var(--emerald-dark);
+    color: var(--emerald-dark);
+    transform: translateY(-2px);
+}
+.chip-item.selected {
+    background: var(--emerald) !important;
+    color: var(--emerald-dark) !important;
+    border-color: var(--emerald) !important;
+    font-weight: 600;
+    box-shadow: 0 0 12px var(--emerald-glow);
+}
+
+.active-chip-badge {
+    background: rgba(127, 183, 126, 0.15);
+    border: 1px solid var(--emerald);
+    color: var(--emerald-dark);
+    padding: 5px 12px;
+    border-radius: 50rem;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.3s ease;
+}
+.active-chip-badge .btn-remove-chip {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+.active-chip-badge .btn-remove-chip:hover {
+    opacity: 1;
+    color: #ef4444;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* --------------------------------------------------------------------------
+   6. DIET FILTERS & RECIPE CARDS GRID
+   -------------------------------------------------------------------------- */
+.diet-filter-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.diet-filter-scroll::-webkit-scrollbar {
+    display: none;
+}
+.btn-filter {
+    background: rgba(127, 183, 126, 0.08);
+    border: 1px solid rgba(53, 94, 59, 0.15);
+    color: var(--text-muted);
+    border-radius: 50rem;
+    padding: 8px 18px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.btn-filter:hover {
+    border-color: var(--emerald-dark);
+    color: var(--emerald-dark);
+}
+.btn-filter.active {
+    background: var(--emerald);
+    color: var(--emerald-dark);
+    border-color: var(--emerald);
+    font-weight: 600;
+    box-shadow: 0 0 15px var(--emerald-glow);
+}
+
+/* Recipe Card Design */
+.recipe-card {
+    background: var(--bg-dark-card);
+    border: 1px solid rgba(53, 94, 59, 0.12);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.recipe-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--emerald);
+    box-shadow: 0 15px 35px rgba(53, 94, 59, 0.08), 0 0 20px rgba(127, 183, 126, 0.12);
+}
+
+.recipe-img-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+.recipe-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.recipe-card:hover .recipe-img {
+    transform: scale(1.06);
+}
+
+/* Match Badge Overlay */
+.match-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--emerald);
+    color: #0f172a !important; /* Darker text for higher contrast */
+    font-weight: 800; /* Bolder font */
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 50rem;
+    box-shadow: 0 4px 12px rgba(53, 94, 59, 0.08);
+}
+
+.favorite-card-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(53, 94, 59, 0.15);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.favorite-card-btn:hover, .favorite-card-btn.active {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #ffffff !important;
+    transform: scale(1.1);
+}
+
+/* Macro Progress Bars */
+.macro-progress-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(53, 94, 59, 0.1) !important;
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   7. AI GENERATOR BANNER & BUTTON GLOW
+   -------------------------------------------------------------------------- */
+.ai-banner-card {
+    background: linear-gradient(135deg, rgba(127, 183, 126, 0.2) 0%, #FFFFFF 60%, #FFFDF8 100%) !important;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(53, 94, 59, 0.15) !important;
+}
+.glow-button {
+    box-shadow: 0 0 25px var(--emerald-glow);
+    animation: pulseGlow 3s infinite;
+}
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 15px var(--emerald-glow); }
+    50% { box-shadow: 0 0 35px rgba(127, 183, 126, 0.6); }
+}
+
+/* --------------------------------------------------------------------------
+   8. MODAL & COOKING TIMER STYLING
+   -------------------------------------------------------------------------- */
+.nav-tabs-emerald .nav-link {
+    color: var(--text-muted);
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 18px;
+    font-weight: 500;
+}
+.nav-tabs-emerald .nav-link.active {
+    color: var(--emerald-dark);
+    background: transparent;
+    border-bottom-color: var(--emerald-dark);
+    font-weight: 600;
+}
+
+.cooking-step-item {
+    background: rgba(127, 183, 126, 0.04);
+    border: 1px solid rgba(53, 94, 59, 0.1);
+    border-radius: 0.75rem;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+}
+.cooking-step-item:hover {
+    border-color: var(--emerald);
+    background: rgba(127, 183, 126, 0.08);
+}
+.cooking-step-item.completed {
+    opacity: 0.6;
+    text-decoration: line-through;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.bg-dark-gradient-overlay {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95), transparent);
+}
+
+/* --------------------------------------------------------------------------
+   9. FOOTER & HOVER STATES
+   -------------------------------------------------------------------------- */
+.hover-emerald {
+    transition: color 0.2s ease;
+}
+.hover-emerald:hover {
+    color: var(--emerald-dark) !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. LIGHT MODE UTILITIES & COLOR OVERRIDES
+   -------------------------------------------------------------------------- */
+.text-white, .text-light {
+    color: var(--text-main) !important;
+}
+.text-light-muted {
+    color: var(--text-muted) !important;
+}
+.bg-orange-accent .text-white, 
+.bg-orange-accent .text-light, 
+.bg-emerald .text-dark,
+.btn .text-white, 
+.btn .text-light,
+.badge .text-white,
+.badge .text-light,
+.favorite-card-btn,
+.favorite-card-btn.active,
+.hero-circle-badge {
+    color: #ffffff !important;
+}
+.bg-emerald .text-dark, .btn-emerald, .btn-filter.active {
+    color: #355E3B !important;
+}
+
+/* Input Fields Overrides */
+input.form-control, textarea.form-control {
+    background-color: var(--bg-dark-card) !important;
+    color: var(--text-main) !important;
+    border: 1px solid rgba(53, 94, 59, 0.2) !important;
+}
+input.form-control:focus, textarea.form-control:focus {
+    background-color: var(--bg-dark-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--emerald) !important;
+}
+.input-group-text {
+    background-color: rgba(127, 183, 126, 0.1) !important;
+    border-color: rgba(53, 94, 59, 0.2) !important;
+    color: var(--emerald-dark) !important;
+}
+.bg-dark {
+    background-color: var(--bg-dark-card) !important;
+}
+.border-secondary {
+    border-color: rgba(53, 94, 59, 0.2) !important;
+}
+.border-secondary-subtle {
+    border-color: rgba(53, 94, 59, 0.1) !important;
+}
+
+/* Modal Specifics */
+.modal-content {
+    background-color: var(--bg-modal) !important;
+    color: var(--text-main) !important;
+    border: 1px solid rgba(127, 183, 126, 0.3) !important;
+}
+.modal-header, .modal-footer {
+    border-color: rgba(127, 183, 126, 0.15) !important;
+}
+.bg-dark-modal {
+    background-color: var(--bg-modal) !important;
+    color: var(--text-main) !important;
+}
+.btn-close {
+    filter: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. ABOUT ME CARD STYLING & HOVER ANIMATION
+   -------------------------------------------------------------------------- */
+.about-card {
+    background-color: var(--bg-dark-card) !important;
+    border: 1px solid rgba(53, 94, 59, 0.1) !important;
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+}
+.about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(53, 94, 59, 0.12) !important;
+}
+.about-card-header {
+    transition: filter 0.3s ease;
+}
+.about-card:hover .about-card-header {
+    filter: hue-rotate(15deg);
+}
+.about-card .profile-img-container img {
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.about-card:hover .profile-img-container img {
+    transform: scale(1.08) rotate(3deg);
+}
+.about-details {
+    background-color: rgba(127, 183, 126, 0.05) !important;
+}
+
+/* --------------------------------------------------------------------------
+   12. FIXED FOOTER STYLING
+   -------------------------------------------------------------------------- */
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 253, 248, 0.9) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(127, 183, 126, 0.25);
+    color: var(--emerald-dark);
+    z-index: 1030;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 -4px 15px rgba(53, 94, 59, 0.03);
+}
+body {
+    padding-bottom: 50px; /* Offset for fixed footer */
+}
+
+/* --------------------------------------------------------------------------
+   13. INTERACTIVE ANIMATIONS & UTILITIES
+   -------------------------------------------------------------------------- */
+
+/* Float Animation */
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+.floating-img-container {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Fade-In Sections */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-in-section.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* Chat Bubble Slide-In */
+@keyframes slideInBubble {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.chat-bubble-animate {
+    animation: slideInBubble 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Shake Animation for Validation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+.shake-invalid {
+    animation: shake 0.4s ease-in-out;
+    border-color: #dc3545 !important;
+}
+
+/* Scroll to Top Button Hover */
+#btn-back-to-top:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(53, 94, 59, 0.2) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Save Recipe Button Layout Fix
+   -------------------------------------------------------------------------- */
+.recipe-img-wrapper {
+    position: relative;
+}
+
+.save-recipe-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 130px; /* Exact width so it doesn't shift */
+    height: 38px;
+    padding: 0;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.2s ease;
+    
+    /* Ensure text is always visible */
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: #dc3545 !important; /* Red text */
+    border: 1px solid #dc3545 !important;
+}
+
+.save-recipe-btn.btn-danger {
+    background-color: #dc3545 !important;
+    color: #ffffff !important; /* White text */
+    border: 1px solid #dc3545 !important;
+}
+
+.save-recipe-btn:hover {
+    transform: scale(1.05);
+}
+
+/* ── Chat recipe mini-cards (AI multi-recipe response) ─────────────────── */
+.chat-recipe-card {
+    transition: border-color 0.2s ease, transform 0.15s ease;
+    border-color: rgba(127, 183, 126, 0.15) !important;
+}
+.chat-recipe-card:hover {
+    border-color: var(--emerald) !important;
+    transform: translateY(-1px);
+}
+.chat-recipe-card img {
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.chat-recipe-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* Prevent text overflow in flex children */
+.min-width-0 {
+    min-width: 0;
+}
+

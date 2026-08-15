@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Healthy Recipe AI - Solusi Masak Sehat & Rekomendasi Resep Berbasis AI berdasarkan Bahan Dapur Anda.">
+    <meta name="keywords"
+        content="resep sehat, AI recipe generator, resep diet, masakan sehat, resep bahan dapur, nutrisi">
+    <meta name="author" content="Healthy Recipe AI Team">
+    <title>The Daily Kitchen - Solusi Masak Sehat dari Bahan Dapur</title>
+
+    <!-- Google Fonts (Poppins & Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- FontAwesome 6 Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ========================================== -->
+    <!-- 1. STICKY NAVBAR COMPONENT                 -->
+    <!-- ========================================== -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-glass sticky-top py-3 shadow-sm">
+        <div class="container">
+            <!-- Brand Logo & Name -->
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
+                <div class="brand-icon-wrapper">
+                    <i class="fa-solid fa-leaf text-success fs-4"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight">The<span class="text-emerald"> Daily Kitchen</span> <span
+                        class="badge bg-orange-accent text-white fs-6 ms-1">:)</span></span>
+            </a>
+
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links & Action Buttons -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3 fw-medium">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home"><i class="fa-solid fa-house me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ai-recipe"><i class="fa-solid fa-robot me-1 text-emerald"></i> AI
+                            Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#favorites"><i class="fa-solid fa-heart me-1 text-danger"></i> My
+                            Favorites</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about-me"><i class="fa-solid fa-user me-1 text-orange-accent"></i>
+                            About Me</a>
+                    </li>
+                </ul>
+
+                <!-- Auth Section -->
+                <div class="d-flex align-items-center gap-2 ms-lg-3" id="auth-section">
+                    <!-- Logged Out State -->
+                    <div id="logged-out-view" class="d-flex align-items-center gap-2">
+                        <button class="btn btn-outline-emerald rounded-pill px-4 py-2 fw-semibold shadow-sm"
+                            data-bs-toggle="modal" data-bs-target="#localLoginModal">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i> Login
+                        </button>
+                    </div>
+
+                    <!-- Logged In State (Hidden by default) -->
+                    <div id="logged-in-view" class="d-none align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="rounded-circle bg-emerald d-flex align-items-center justify-content-center text-dark fw-bold fs-5 shadow-sm"
+                                style="width: 38px; height: 38px;" id="user-profile-pic-container">
+                                <!-- Initial generated by JS -->
+                            </div>
+                            <span id="user-name" class="fw-medium text-white d-none d-md-inline"></span>
+                        </div>
+                        <button id="btn-logout" class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 shadow-sm">
+                            <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ========================================== -->
+        <!-- 2. HOME SECTION (HERO)                     -->
+        <!-- ========================================== -->
+        <section id="home" class="hero-wrapper position-relative py-5">
+            <div class="container position-relative z-1 py-lg-4">
+                <div class="row align-items-center gy-5">
+                    <!-- Left Side: Large Circle Image + Action Button -->
+                    <div class="col-lg-5 text-center">
+                        <div class="hero-circle-outer mx-auto mb-4">
+                            <div class="hero-circle-inner shadow-lg">
+                                <img src="assets/images/hero_salad.png" alt="Gambar Makanan Sehat"
+                                    class="hero-circle-img">
+                            </div>
+                            <div class="hero-circle-badge shadow">
+                                <i class="fa-solid fa-leaf me-1"></i> Fresh & Healthy
+                            </div>
+                        </div>
+
+                        <!-- Button Under Food Image -->
+                        <div class="text-center mt-3">
+                            <a href="#ai-recipe"
+                                class="btn btn-chat-orange btn-lg rounded-pill px-4 py-3 fw-bold shadow-lg d-inline-flex align-items-center justify-content-center gap-2 glow-orange">
+                                <i class="fa-solid fa-comments fs-5"></i>
+                                <span>Masuk ke Chat!</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Title & Description -->
+                    <div class="col-lg-7 text-center text-lg-start ps-lg-4">
+                        <div
+                            class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-emerald-subtle border border-emerald mb-3">
+                            <i class="fa-solid fa-wand-magic-sparkles text-emerald"></i>
+                            <span class="fs-7 fw-semibold text-emerald">Smart AI Recipe Engine</span>
+                        </div>
+
+                        <h1 class="display-3 fw-extrabold text-white mb-3">
+                            Healthy Recipe <span class="text-orange-accent">AI</span>
+                        </h1>
+
+                        <p class="lead text-light mb-4 fs-4 fw-normal" style="max-width: 600px;">
+                            Masukkan bahan makanan yang kamu miliki dan biarkan AI membantu membuat resep sehat.
+                        </p>
+
+                        <!-- Feature Badges -->
+                        <div
+                            class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3 mb-4 fs-7 fw-medium">
+                            <span
+                                class="badge bg-emerald-subtle text-emerald border border-emerald px-3 py-2 rounded-pill d-flex align-items-center gap-1">
+                                <i class="fa-solid fa-circle-check text-emerald"></i> Rekomendasi Akurat AI
+                            </span>
+                            <span
+                                class="badge bg-orange-subtle text-orange-accent border border-orange-accent px-3 py-2 rounded-pill d-flex align-items-center gap-1">
+                                <i class="fa-solid fa-fire text-orange-accent"></i> Hitung Kalori & Nutrisi
+                            </span>
+                            <span
+                                class="badge bg-emerald-subtle text-emerald border border-emerald px-3 py-2 rounded-pill d-flex align-items-center gap-1">
+                                <i class="fa-solid fa-seedling text-emerald"></i> Bebas Waste Bahan Kulkas
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. AI RECIPE SECTION (CHAT APPLICATION)    -->
+        <!-- ========================================== -->
+        <section id="ai-recipe" class="py-5 bg-dark-slate position-relative fade-in-section">
+            <div class="container">
+                <!-- Section Header -->
+                <div class="text-center mb-5">
+                    <div
+                        class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-orange-subtle border border-orange-accent mb-2">
+                        <i class="fa-solid fa-robot text-orange-accent"></i>
+                        <span class="fs-7 fw-bold text-orange-accent"> Recipe Generator </span>
+                    </div>
+                    <h2 class="display-5 fw-bold text-white mb-2">
+                        <i class="fa-solid fa-comments text-emerald me-2"></i>Recipe
+                    </h2>
+                    <p class="text-light-muted fs-5">Konsultasikan bahan dapur, alergi, dan preferensi masakan Anda
+                        secara interaktif.</p>
+                </div>
+
+                <!-- Interactive AI Recipe Chat Box -->
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-10">
+                        <div
+                            class="card bg-glass border border-emerald border-opacity-30 rounded-4 shadow-lg overflow-hidden">
+                            <!-- Chat Box Header -->
+                            <div
+                                class="card-header bg-dark-glass border-bottom border-secondary d-flex align-items-center justify-content-between px-4 py-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="position-relative">
+                                        <div class="rounded-circle bg-emerald p-2 text-dark d-flex align-items-center justify-content-center"
+                                            style="width: 44px; height: 44px;">
+                                            <i class="fa-solid fa-robot fs-4"></i>
+                                        </div>
+                                        <span
+                                            class="position-absolute bottom-0 end-0 p-1 bg-success border border-dark rounded-circle"></span>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold text-white mb-0" id="chat-header-title">Healthy Recipe
+                                            Assistant</h5>
+                                        <small class="text-emerald fs-8"><i
+                                                class="fa-solid fa-circle text-success me-1"></i> Online & Ready to
+                                            Cook</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span
+                                        class="badge bg-orange-subtle text-orange-accent border border-orange-accent rounded-pill px-3 py-2 fs-8">
+                                        <i class="fa-solid fa-sparkles me-1"></i> Assistant
+                                    </span>
+                                    <button type="button" id="btn-clear-chat"
+                                        class="btn btn-sm btn-outline-danger rounded-pill px-2 py-1 fs-8"
+                                        title="Clear Chat">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Chat Messages Body -->
+                            <div class="card-body p-4 overflow-y-auto" id="chat-messages-container"
+                                style="min-height: 320px; max-height: 480px; background: rgba(11, 19, 32, 0.6);">
+                                <!-- AI Automated Initial Message -->
+                                <div class="d-flex align-items-start gap-3 mb-4">
+                                    <div class="rounded-circle bg-emerald-subtle border border-emerald p-2 text-emerald flex-shrink-0"
+                                        style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="fa-solid fa-robot fs-5"></i>
+                                    </div>
+                                    <div
+                                        class="p-3 p-md-4 rounded-4 bg-dark-glass border border-emerald border-opacity-25 text-white max-w-85 shadow-sm">
+                                        <p class="mb-2 fs-6">Halo! 👋</p>
+                                        <p class="mb-2 fs-6">Silakan masukkan informasi berikut:</p>
+                                        <ol class="ps-3 mb-2 fs-6">
+                                            <li>Bahan makanan yang kamu miliki.</li>
+                                            <li>Apakah kamu memiliki alergi makanan?</li>
+                                            <li>Apakah ada permintaan khusus?</li>
+                                        </ol>
+                                        <p class="mb-1 text-light-muted fs-7">Contoh:</p>
+                                        <ul class="ps-3 mb-3 fs-7 text-light-muted">
+                                            <li>Tidak mau makanan gorengan</li>
+                                            <li>Vegetarian</li>
+                                            <li>Rendah gula</li>
+                                            <li>Rendah garam</li>
+                                            <li>High protein</li>
+                                        </ul>
+                                        <p class="mb-0 fw-semibold text-warning fs-7">
+                                            <i class="fa-solid fa-circle-info me-1"></i> Setelah semua informasi
+                                            dimasukkan, tekan tombol <strong>Generate Recipe</strong>.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Chat Input Bar & Generate Recipe Button -->
+                            <div class="card-footer bg-dark-glass border-top border-secondary p-3 p-md-4">
+                                <form id="ai-chat-form">
+                                    <div class="row g-2 align-items-center">
+                                        <div class="col-md-9 col-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text bg-dark border-secondary text-emerald">
+                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                </span>
+                                                <textarea id="chat-input"
+                                                    class="form-control bg-dark text-white border-secondary shadow-none"
+                                                    rows="2"
+                                                    placeholder="Tulis bahan makanan, alergi, dan permintaan khusus Anda di sini... (Contoh: Bahan: Dada Ayam, Bayam, Tomat. Alergi: Udang. Request: High protein, Tidak mau gorengan)"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-12 text-end">
+                                            <button type="submit" id="btn-generate-recipe"
+                                                class="btn btn-chat-orange w-100 py-3 rounded-4 fw-bold text-white d-flex align-items-center justify-content-center gap-2 shadow-lg glow-orange">
+                                                <i class="fa-solid fa-wand-magic-sparkles fs-5"></i>
+                                                <span>Generate Recipe</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Generated Recipe Result Display -->
+                <div id="ai-generated-result-container" class="row justify-content-center mt-4 d-none fade-in-section">
+                    <div class="col-lg-10">
+                        <div class="card bg-glass border border-emerald rounded-4 shadow-lg p-4">
+                            <h4 class="fw-bold text-main mb-3 text-center text-lg-start">
+                                <i class="fa-solid fa-wand-magic-sparkles text-emerald me-2"></i>Rekomendasi Resep AI
+                                Terbaru
+                            </h4>
+                            <div class="row align-items-center g-4">
+                                <div class="col-md-5">
+                                    <div class="rounded-4 overflow-hidden shadow-sm floating-img-container">
+                                        <img id="ai-res-img" src="" alt="Resep AI"
+                                            class="img-fluid w-100 object-fit-cover"
+                                            style="max-height: 250px; min-height: 200px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-2">
+                                        <span class="badge bg-emerald text-dark fw-bold px-3 py-1 rounded-pill"
+                                            id="ai-res-category">Hasil AI</span>
+                                        <span
+                                            class="badge bg-glass border border-emerald text-emerald px-3 py-1 rounded-pill fs-8"
+                                            id="ai-res-nutri">Nutri-Score A</span>
+                                    </div>
+                                    <h3 class="fw-bold text-main mb-2" id="ai-res-title">Nama Resep</h3>
+                                    <p class="text-muted fs-7 mb-3" id="ai-res-desc">Deskripsi resep...</p>
+
+                                    <div class="row g-2 mb-3 text-center fs-8">
+                                        <div class="col-6 col-sm-3">
+                                            <div class="p-2 rounded-3 bg-dark-glass border border-secondary-subtle">
+                                                <small class="text-muted d-block">Waktu</small>
+                                                <strong class="text-main" id="ai-res-time">0 Min</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-3">
+                                            <div class="p-2 rounded-3 bg-dark-glass border border-secondary-subtle">
+                                                <small class="text-muted d-block">Kalori</small>
+                                                <strong class="text-orange-accent" id="ai-res-cal">0 kkal</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-3">
+                                            <div class="p-2 rounded-3 bg-dark-glass border border-secondary-subtle">
+                                                <small class="text-muted d-block">Protein</small>
+                                                <strong class="text-success" id="ai-res-protein">0g</strong>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-sm-3">
+                                            <div class="p-2 rounded-3 bg-dark-glass border border-secondary-subtle">
+                                                <small class="text-muted d-block">Karbohidrat</small>
+                                                <strong class="text-info" id="ai-res-carbs">0g</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+                                        <button class="btn btn-emerald rounded-pill px-4" id="btn-open-generated-modal">
+                                            <i class="fa-solid fa-stopwatch me-1"></i> Mulai Memasak
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pantry Ingredients Selector Component -->
+                <div id="pantry-section" class="mb-5 fade-in-section">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold text-white mb-2">
+                            <i class="fa-solid fa-basket-shopping text-emerald me-2"></i>Pilih Bahan Di Dapur Anda
+                        </h4>
+                        <p class="text-light-muted fs-7">Klik bahan di bawah atau ketik di pencarian untuk menyesuaikan
+                            isi kulkas Anda.</p>
+                    </div>
+
+                    <!-- Custom Input Search Bar -->
+                    <div class="row justify-content-center mb-4">
+                        <div class="col-md-8 col-lg-6">
+                            <div
+                                class="input-group search-input-group shadow-sm rounded-pill p-1 bg-glass border border-secondary">
+                                <span class="input-group-text bg-transparent border-0 text-emerald ps-3">
+                                    <i class="fa-solid fa-magnifying-glass fs-5"></i>
+                                </span>
+                                <input type="text" id="ingredient-input"
+                                    class="form-control bg-transparent border-0 text-white shadow-none"
+                                    placeholder="Contoh: Ayam, Telur, Bayam, Tempe, Tomat...">
+                                <button class="btn btn-emerald rounded-pill px-4" type="button" id="btn-add-ingredient">
+                                    <i class="fa-solid fa-plus me-1"></i> Tambah
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Selection Chips by Category -->
+                    <div class="pantry-chips-wrapper bg-glass p-4 rounded-4 mb-4 border border-secondary-subtle">
+                        <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                            <span class="fw-semibold text-light fs-6">
+                                <i class="fa-solid fa-tags text-orange-accent me-2"></i>Bahan Populer (Klik untuk
+                                memilih):
+                            </span>
+                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3"
+                                id="btn-clear-all-ingredients">
+                                <i class="fa-solid fa-rotate-left me-1"></i> Reset Bahan
+                            </button>
+                        </div>
+
+                        <!-- Quick Chips Container -->
+                        <div class="d-flex flex-wrap gap-2" id="quick-chips-container">
+                            <!-- Rendered via JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Selected Ingredients Active Bar -->
+                    <div class="selected-ingredients-bar p-3 rounded-4 bg-emerald-dark-glass border border-emerald border-opacity-25"
+                        id="selected-bar-container">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-clipboard-check text-emerald fs-5"></i>
+                                <span class="fw-bold text-white fs-6">Bahan Dipilih:</span>
+                                <span class="badge bg-emerald text-dark fw-bold" id="selected-count">0 Bahan</span>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 align-items-center" id="active-chips-container">
+                                <span class="text-light-muted fs-7 fst-italic">Belum ada bahan terpilih. Klik bahan di
+                                    atas untuk mulai mencocokkan resep!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recipe Recommendations Grid -->
+                <div id="recipes-section" class="py-3 fade-in-section">
+                    <div
+                        class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+                        <div>
+                            <h3 class="fw-bold text-white mb-1">
+                                <i class="fa-solid fa-utensils text-emerald me-2"></i>Rekomendasi Resep AI
+                            </h3>
+                            <p class="text-light-muted mb-0">Resep diurutkan berdasarkan persentase kecocokan bahan yang
+                                Anda miliki.</p>
+                        </div>
+
+                        <!-- Sort Options -->
+                        <div class="d-flex align-items-center gap-2">
+                            <label for="sort-select" class="text-light-muted fs-7 text-nowrap"><i
+                                    class="fa-solid fa-arrow-down-wide-short me-1"></i> Urutkan:</label>
+                            <select id="sort-select"
+                                class="form-select form-select-sm bg-glass text-white border-secondary rounded-pill shadow-none"
+                                style="min-width: 180px;">
+                                <option value="match" selected>Kecocokan Bahan (Match %)</option>
+                                <option value="calories-asc">Kalori Terendah</option>
+                                <option value="protein-desc">Protein Tertinggi</option>
+                                <option value="time-asc">Waktu Masak Tercepat</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Diet Filter Buttons -->
+                    <div class="diet-filter-scroll d-flex gap-2 mb-4 pb-2">
+                        <button class="btn btn-filter active" data-filter="all">Semua Resep</button>
+                        <button class="btn btn-filter" data-filter="high-protein"><i
+                                class="fa-solid fa-dumbbell text-warning me-1"></i> Tinggi Protein</button>
+                        <button class="btn btn-filter" data-filter="low-calorie"><i
+                                class="fa-solid fa-leaf text-success me-1"></i> Rendah Kalori</button>
+                        <button class="btn btn-filter" data-filter="keto"><i
+                                class="fa-solid fa-bolt text-info me-1"></i> Keto / Low-Carb</button>
+                        <button class="btn btn-filter" data-filter="vegetarian"><i
+                                class="fa-solid fa-seedling text-emerald me-1"></i> Vegetarian</button>
+                        <button class="btn btn-filter" data-filter="gluten-free"><i
+                                class="fa-solid fa-wheat-awn-circle-exclamation text-warning me-1"></i> Bebas
+                            Gluten</button>
+                    </div>
+
+                    <!-- Recipe Cards Grid Container -->
+                    <div class="row g-4" id="recipe-grid">
+                        <!-- Dynamic Recipe Cards Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- AI Custom Recipe Generator Banner -->
+                <div id="ai-generator-section" class="mt-5 pt-4 fade-in-section">
+                    <div class="ai-banner-card p-4 p-lg-5 rounded-5 border border-emerald border-opacity-50">
+                        <div class="row align-items-center gy-4">
+                            <div class="col-lg-8 text-center text-lg-start">
+                                <div
+                                    class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-warning-subtle text-warning border border-warning mb-3">
+                                    <i class="fa-solid fa-sparkles"></i>
+                                    <span class="fs-7 fw-bold">Fitur Eksklusif AI Chef</span>
+                                </div>
+                                <h2 class="display-6 fw-bold text-white mb-3">
+                                    Punya Kombinasi Bahan Unik di Rumah? <br>
+                                    <span class="text-gradient-emerald">Biarkan AI Meracik Resep Kustom Untuk
+                                        Anda!</span>
+                                </h2>
+                                <p class="text-light-muted mb-0">
+                                    Masukkan target kalori, tujuan diet (misal: Bulking, Cutting, Diabetes-Friendly),
+                                    lalu izinkan AI merancang langkah memasak lengkap beserta perkiraan nilai gizi
+                                    instan.
+                                </p>
+                            </div>
+                            <div class="col-lg-4 text-center text-lg-end">
+                                <button
+                                    class="btn btn-emerald-lg rounded-pill px-4 py-3 fw-bold fs-6 shadow-lg glow-button"
+                                    data-bs-toggle="modal" data-bs-target="#aiGeneratorModal">
+                                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Buat Resep AI Kustom
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. ABOUT ME SECTION                        -->
+        <!-- ========================================== -->
+        <section id="about-me" class="py-5 position-relative fade-in-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <div
+                        class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-orange-subtle border border-orange-accent mb-2">
+                        <i class="fa-solid fa-user text-orange-accent"></i>
+                        <span class="fs-7 fw-bold text-orange-accent">Pengembang & Misi Project</span>
+                    </div>
+                    <h2 class="display-5 fw-bold text-white mb-2">About Me</h2>
+                    <p class="text-light-muted fs-5">Mengenal lebih dekat Healthy Recipe AI & Pengembang dibaliknya.</p>
+                </div>
+
+                <div class="row gy-4 align-items-stretch">
+                    <!-- Profile Card -->
+                    <div class="col-lg-5">
+                        <div class="card about-card border-0 rounded-4 h-100 shadow-lg overflow-hidden">
+                            <div class="about-card-header position-relative"
+                                style="height: 120px; background: linear-gradient(135deg, var(--emerald) 0%, var(--orange-accent) 100%);">
+                            </div>
+                            <div class="card-body p-4 pt-0 text-center position-relative">
+                                <!-- Profile Image (Circular) -->
+                                <div class="profile-img-container mx-auto"
+                                    style="margin-top: -65px; width: 130px; height: 130px;">
+                                    <img src="https://cdn.picrew.me/shareImg/org/202607/2822767_aFhEzOJS.png"
+                                        alt="Angeline Christy Wijaya"
+                                        class="img-fluid rounded-circle border border-4 border-white shadow-sm object-fit-cover w-100 h-100">
+                                </div>
+
+                                <h4 class="fw-bold text-dark mt-3 mb-1">Angeline Christy Wijaya</h4>
+                                <p class="text-emerald-dark fw-semibold fs-7 mb-4">Student & Developer</p>
+
+                                <div
+                                    class="about-details text-start bg-light p-3 rounded-3 mb-3 border border-light-subtle">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box rounded-circle bg-emerald-subtle text-emerald-dark d-flex align-items-center justify-content-center me-3"
+                                            style="width: 36px; height: 36px; flex-shrink: 0;">
+                                            <i class="fa-solid fa-graduation-cap text-emerald-dark"></i>
+                                        </div>
+                                        <div>
+                                            <small class="text-muted d-block fs-8">Sekolah</small>
+                                            <span class="fw-semibold text-dark fs-7">SMA Kristen Tunas Bangsa
+                                                Sunter</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="icon-box rounded-circle bg-orange-subtle text-orange-accent d-flex align-items-center justify-content-center me-3"
+                                            style="width: 36px; height: 36px; flex-shrink: 0;">
+                                            <i class="fa-solid fa-cake-candles text-orange-accent"></i>
+                                        </div>
+                                        <div>
+                                            <small class="text-muted d-block fs-8">Tanggal Lahir</small>
+                                            <span class="fw-semibold text-dark fs-7">28 Juni 2010</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-box rounded-circle bg-info-subtle text-info d-flex align-items-center justify-content-center me-3"
+                                            style="width: 36px; height: 36px; flex-shrink: 0;">
+                                            <i class="fa-solid fa-music text-info"></i>
+                                        </div>
+                                        <div>
+                                            <small class="text-muted d-block fs-8">Favorite Music</small>
+                                            <span class="fw-semibold text-dark fs-7">Valentine-laufey</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 justify-content-center mt-3">
+                                    <a href="#home" class="btn btn-outline-emerald btn-sm rounded-pill px-3"><i
+                                            class="fa-solid fa-house me-1"></i> Home</a>
+                                    <a href="#ai-recipe"
+                                        class="btn btn-chat-orange btn-sm rounded-pill px-3 text-white"><i
+                                            class="fa-solid fa-comments me-1"></i> AI Recipe</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mission & Tech Details -->
+                    <div class="col-lg-7">
+                        <div
+                            class="card bg-glass border border-secondary rounded-4 h-100 p-4 p-lg-5 shadow-lg d-flex flex-column justify-content-between">
+                            <div>
+                                <h3 class="fw-bold text-white mb-3">
+                                    Misi <span class="text-emerald">Healthy Recipe AI</span>
+                                </h3>
+                                <p class="text-light-muted mb-4 fs-6">
+                                    Healthy Recipe AI lahir dari permasalahan sehari-hari: bingung ingin memasak apa
+                                    dengan bahan makanan tersisa di kulkas. Aplikasi ini menggabungkan pencocokan bahan
+                                    berbasis AI, perhitungan gizi terverifikasi, dan fitur memasak interaktif untuk gaya
+                                    hidup yang lebih sehat, ekonomis, dan berkelanjutan.
+                                </p>
+
+                                <h5 class="fw-bold text-white mb-3">
+                                    <i class="fa-solid fa-layer-group text-orange-accent me-2"></i>Teknologi Yang
+                                    Digunakan:
+                                </h5>
+
+                                <div class="row g-3 mb-4">
+                                    <div class="col-sm-6">
+                                        <div
+                                            class="p-3 bg-dark-glass rounded-3 border border-secondary d-flex align-items-center gap-3">
+                                            <i class="fa-brands fa-html5 text-danger fs-3"></i>
+                                            <div>
+                                                <h6 class="fw-bold text-white mb-0">HTML5 Semantik</h6>
+                                                <small class="text-light-muted fs-8">Struktur web modern & SEO</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div
+                                            class="p-3 bg-dark-glass rounded-3 border border-secondary d-flex align-items-center gap-3">
+                                            <i class="fa-brands fa-bootstrap text-primary fs-3"></i>
+                                            <div>
+                                                <h6 class="fw-bold text-white mb-0">Bootstrap 5.3</h6>
+                                                <small class="text-light-muted fs-8">Grid responsive & Navbar</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div
+                                            class="p-3 bg-dark-glass rounded-3 border border-secondary d-flex align-items-center gap-3">
+                                            <i class="fa-brands fa-js text-warning fs-3"></i>
+                                            <div>
+                                                <h6 class="fw-bold text-white mb-0">JavaScript ES6+</h6>
+                                                <small class="text-light-muted fs-8">State engine & AI Matcher</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div
+                                            class="p-3 bg-dark-glass rounded-3 border border-secondary d-flex align-items-center gap-3">
+                                            <i class="fa-solid fa-database text-emerald fs-3"></i>
+                                            <div>
+                                                <h6 class="fw-bold text-white mb-0">Database Resep</h6>
+                                                <small class="text-light-muted fs-8">Data nutrisi & resep teruji</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="p-3 bg-emerald-dark-glass rounded-3 border border-emerald border-opacity-25 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                <span class="fs-7 text-white fw-semibold">
+                                    <i class="fa-solid fa-circle-check text-emerald me-2"></i>Siap membuat masakan sehat
+                                    hari ini?
+                                </span>
+                                <a href="#ai-recipe" class="btn btn-emerald btn-sm rounded-pill px-3">Mulai Sekarang</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- 5. MODAL: DETAIL RESEP & COOKING TIMER     -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="recipeDetailModal" tabindex="-1" aria-labelledby="recipeDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-dark-modal text-white border border-secondary rounded-4 overflow-hidden">
+                <!-- Modal Header -->
+                <div class="modal-header border-bottom border-secondary-subtle px-4 py-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-emerald text-dark fw-bold px-3 py-2 rounded-pill"
+                            id="modal-nutri-score">Nutri-Score A</span>
+                        <span class="badge bg-glass text-light border border-secondary px-3 py-2 rounded-pill"
+                            id="modal-category">Kategori</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body p-4">
+                    <div class="row gy-4">
+                        <!-- Left Column: Image, Portion Scale, Nutrients -->
+                        <div class="col-lg-5">
+                            <div class="position-relative rounded-4 overflow-hidden mb-3">
+                                <img id="modal-img" src="" alt="Detail Resep" class="img-fluid w-100 object-fit-cover"
+                                    style="max-height: 280px;">
+                                <div class="position-absolute bottom-0 start-0 end-0 p-3 bg-dark-gradient-overlay">
+                                    <div class="d-flex justify-content-between text-white fs-7">
+                                        <span><i class="fa-regular fa-clock me-1 text-info"></i> Waktu: <strong
+                                                id="modal-prep-time">0 min</strong></span>
+                                        <span><i class="fa-solid fa-gauge-high me-1 text-warning"></i> Kesulitan:
+                                            <strong id="modal-difficulty">Easy</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Portion Scaler -->
+                            <div class="bg-glass p-3 rounded-4 mb-3 border border-secondary">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <label class="fw-bold text-white fs-7 mb-0"><i
+                                            class="fa-solid fa-users me-1 text-emerald"></i> Porsi Saji:</label>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button type="button" class="btn btn-outline-emerald portion-btn active"
+                                            data-portion="1">1 Porsi</button>
+                                        <button type="button" class="btn btn-outline-emerald portion-btn"
+                                            data-portion="2">2 Porsi</button>
+                                        <button type="button" class="btn btn-outline-emerald portion-btn"
+                                            data-portion="4">4 Porsi</button>
+                                    </div>
+                                </div>
+                                <div class="text-light-muted fs-8">Jumlah bahan dan nilai nutrisi di bawah akan
+                                    menyesuaikan porsi otomatis.</div>
+                            </div>
+
+                            <!-- Nutrients Breakdown Card -->
+                            <div class="bg-glass p-3 rounded-4 border border-secondary">
+                                <h6 class="fw-bold text-emerald mb-3"><i
+                                        class="fa-solid fa-chart-pie me-2"></i>Informasi Nutrisi Per Porsi</h6>
+                                <div class="row g-2 text-center mb-3">
+                                    <div class="col-3">
+                                        <div class="p-2 bg-dark-glass rounded-3">
+                                            <small class="text-muted d-block">Kalori</small>
+                                            <span class="fw-bold text-white fs-6" id="modal-cal">0</span>
+                                            <small class="text-muted d-block fs-8">kkal</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="p-2 bg-dark-glass rounded-3">
+                                            <small class="text-muted d-block">Protein</small>
+                                            <span class="fw-bold text-warning fs-6" id="modal-protein">0</span>
+                                            <small class="text-muted d-block fs-8">gram</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="p-2 bg-dark-glass rounded-3">
+                                            <small class="text-muted d-block">Karbo</small>
+                                            <span class="fw-bold text-info fs-6" id="modal-carbs">0</span>
+                                            <small class="text-muted d-block fs-8">gram</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="p-2 bg-dark-glass rounded-3">
+                                            <small class="text-muted d-block">Lemak</small>
+                                            <span class="fw-bold text-danger fs-6" id="modal-fat">0</span>
+                                            <small class="text-muted d-block fs-8">gram</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AI Reason Box -->
+                                <div
+                                    class="p-3 bg-emerald-dark-glass rounded-3 border border-emerald border-opacity-25 fs-7">
+                                    <div class="fw-bold text-emerald mb-1"><i class="fa-solid fa-lightbulb me-1"></i>
+                                        Alasan AI Memilih Resep Ini:</div>
+                                    <p class="text-light mb-0" id="modal-ai-reason">Resep ini sangat seimbang untuk gaya
+                                        hidup sehat Anda.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Title, Ingredients Checklist, Interactive Cooking Steps & Timer -->
+                        <div class="col-lg-7">
+                            <h3 class="fw-bold text-white mb-2" id="modal-title">Nama Resep</h3>
+                            <p class="text-light-muted mb-4" id="modal-desc">Deskripsi singkat resep.</p>
+
+                            <!-- Ingredients Tab & Cooking Steps Accordion -->
+                            <ul class="nav nav-tabs nav-tabs-emerald mb-3 border-secondary" id="recipeTab"
+                                role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="ingredients-tab" data-bs-toggle="tab"
+                                        data-bs-target="#ingredients-tab-pane" type="button" role="tab">
+                                        <i class="fa-solid fa-list-check me-1"></i> Bahan-bahan
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="steps-tab" data-bs-toggle="tab"
+                                        data-bs-target="#steps-tab-pane" type="button" role="tab">
+                                        <i class="fa-solid fa-fire-burner me-1"></i> Langkah Memasak
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="timer-tab" data-bs-toggle="tab"
+                                        data-bs-target="#timer-tab-pane" type="button" role="tab">
+                                        <i class="fa-solid fa-stopwatch me-1 text-warning"></i> Cooking Timer
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="recipeTabContent">
+                                <!-- Tab 1: Ingredients -->
+                                <div class="tab-pane fade show active" id="ingredients-tab-pane" role="tabpanel"
+                                    tabindex="0">
+                                    <div class="bg-glass p-3 rounded-4 border border-secondary mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="fw-bold text-white mb-0">Daftar Bahan Yang Dibutuhkan:</h6>
+                                            <span class="fs-8 text-light-muted"><i
+                                                    class="fa-solid fa-circle-info text-emerald"></i> Tandai bahan yang
+                                                sudah siap</span>
+                                        </div>
+                                        <ul class="list-group list-group-flush bg-transparent"
+                                            id="modal-ingredients-list">
+                                            <!-- Rendered via JS -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Tab 2: Cooking Steps -->
+                                <div class="tab-pane fade" id="steps-tab-pane" role="tabpanel" tabindex="0">
+                                    <div class="bg-glass p-3 rounded-4 border border-secondary">
+                                        <h6 class="fw-bold text-white mb-3">Langkah Memasak Interaktif:</h6>
+                                        <div class="cooking-steps-list" id="modal-steps-list">
+                                            <!-- Rendered via JS -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tab 3: Interactive Timer -->
+                                <div class="tab-pane fade" id="timer-tab-pane" role="tabpanel" tabindex="0">
+                                    <div class="bg-glass p-4 rounded-4 text-center border border-secondary">
+                                        <h5 class="fw-bold text-white mb-2"><i
+                                                class="fa-solid fa-stopwatch me-2 text-warning"></i>Timer Dapur
+                                            Interaktif</h5>
+                                        <p class="text-light-muted fs-7 mb-4">Gunakan timer ini untuk memantau waktu
+                                            perebusan, memanggang, atau menumis.</p>
+
+                                        <!-- Timer Clock Display -->
+                                        <div class="timer-display display-2 fw-bold text-emerald my-3 font-monospace"
+                                            id="timer-clock">
+                                            05:00
+                                        </div>
+
+                                        <!-- Preset Timer Quick Buttons -->
+                                        <div class="d-flex justify-content-center gap-2 mb-4 flex-wrap">
+                                            <button class="btn btn-sm btn-outline-emerald rounded-pill btn-preset-timer"
+                                                data-seconds="180">3 Min (Tumis)</button>
+                                            <button class="btn btn-sm btn-outline-emerald rounded-pill btn-preset-timer"
+                                                data-seconds="300">5 Min (Rebus Telur)</button>
+                                            <button class="btn btn-sm btn-outline-emerald rounded-pill btn-preset-timer"
+                                                data-seconds="600">10 Min (Kukus)</button>
+                                            <button class="btn btn-sm btn-outline-emerald rounded-pill btn-preset-timer"
+                                                data-seconds="900">15 Min (Panggang)</button>
+                                        </div>
+
+                                        <!-- Timer Controls -->
+                                        <div class="d-flex justify-content-center gap-3">
+                                            <button class="btn btn-emerald rounded-pill px-4 py-2 fw-semibold"
+                                                id="btn-timer-start">
+                                                <i class="fa-solid fa-play me-1"></i> Mulai
+                                            </button>
+                                            <button class="btn btn-outline-warning rounded-pill px-4 py-2 fw-semibold"
+                                                id="btn-timer-pause" disabled>
+                                                <i class="fa-solid fa-pause me-1"></i> Jeda
+                                            </button>
+                                            <button class="btn btn-outline-danger rounded-pill px-4 py-2 fw-semibold"
+                                                id="btn-timer-reset">
+                                                <i class="fa-solid fa-rotate-left me-1"></i> Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer border-top border-secondary-subtle px-4 py-3">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
+                        data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-emerald rounded-pill px-4" id="modal-btn-favorite">
+                        <i class="fa-solid fa-heart me-1"></i> Simpan ke Favorit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 6. MODAL: AI CUSTOM RECIPE GENERATOR       -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="aiGeneratorModal" tabindex="-1" aria-labelledby="aiGeneratorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark-modal text-white border border-emerald border-opacity-50 rounded-4">
+                <div class="modal-header border-bottom border-secondary-subtle px-4 py-3">
+                    <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2"
+                        id="aiGeneratorModalLabel">
+                        <i class="fa-solid fa-wand-magic-sparkles text-emerald"></i> AI Custom Recipe Generator
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="ai-generator-form">
+                        <!-- Meal Type -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-light">Waktu Makan:</label>
+                            <select class="form-select bg-glass text-white border-secondary shadow-none"
+                                id="ai-meal-type">
+                                <option value="Sarapan Sehat">Sarapan Sehat</option>
+                                <option value="Makan Siang Enerjik" selected>Makan Siang Enerjik</option>
+                                <option value="Makan Malam Ringan">Makan Malam Ringan</option>
+                                <option value="Camilan Diet Tinggi Protein">Camilan Diet / Protein</option>
+                            </select>
+                        </div>
+
+                        <!-- Target Calories -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-light justify-content-between d-flex">
+                                <span>Target Kalori Maksimal:</span>
+                                <span class="text-emerald fw-bold" id="ai-cal-display">450 kkal</span>
+                            </label>
+                            <input type="range" class="form-range" id="ai-cal-range" min="200" max="800" step="25"
+                                value="450">
+                        </div>
+
+                        <!-- Dietary Preference -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-light">Target Kesehatan / Diet:</label>
+                            <select class="form-select bg-glass text-white border-secondary shadow-none"
+                                id="ai-diet-goal">
+                                <option value="Tinggi Protein & Bulking">Tinggi Protein & Muscle Building</option>
+                                <option value="Cutting & Rendah Kalori">Cutting / Penurunan Berat Badan</option>
+                                <option value="Keto & Low Carb">Keto / Low-Carb High-Fat</option>
+                                <option value="Vegetarian Clean Eating">Vegetarian / Clean Eating</option>
+                            </select>
+                        </div>
+
+                        <!-- Custom Ingredients list -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold text-light">Bahan Khusus yang Ingin Digunakan:</label>
+                            <input type="text" class="form-control bg-glass text-white border-secondary shadow-none"
+                                id="ai-custom-ingredients"
+                                placeholder="Contoh: Dada ayam, brokoli, minyak zaitun, bawang putih">
+                            <div class="form-text text-light-muted fs-8">AI akan mengkombinasikan bahan ini menjadi
+                                resep sehat baru.</div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="btn btn-emerald w-100 rounded-pill py-3 fw-bold fs-6 d-flex align-items-center justify-content-center gap-2"
+                            id="btn-generate-ai">
+                            <i class="fa-solid fa-bolt"></i> Racik Resep Sekarang dengan AI
+                        </button>
+                    </form>
+
+                    <!-- AI Loader Indicator (hidden by default) -->
+                    <div class="text-center py-5 d-none" id="ai-loader">
+                        <div class="spinner-border text-emerald my-3" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h5 class="fw-bold text-white">AI Sedang Meracik Resep Kustom Anda...</h5>
+                        <p class="text-light-muted fs-7">Menganalisis makronutrisi, menghitung kalori, dan menyusun
+                            langkah memasak terbaik.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 7. FAVORITES SECTION                       -->
+    <!-- ========================================== -->
+    <section id="favorites" class="py-5 bg-dark-slate position-relative">
+        <div class="container">
+            <div class="text-center mb-5">
+                <div
+                    class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-danger-subtle border border-danger mb-2">
+                    <i class="fa-solid fa-heart text-danger"></i>
+                    <span class="fs-7 fw-bold text-danger"> Saved Recipes </span>
+                </div>
+                <h2 class="display-5 fw-bold text-white mb-2">
+                    My Favorites
+                </h2>
+                <p class="text-light-muted fs-5" id="favorites-message">Login to view your saved recipes.</p>
+            </div>
+
+            <!-- Favorites List Container -->
+            <div id="favorites-list-container" class="row gy-4">
+                <!-- Recipe Cards will be rendered here via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 8. FOOTER SECTION                          -->
+    <!-- ========================================== -->
+    <footer class="footer py-5 border-top border-secondary-subtle bg-dark-slate">
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-5">
+                    <a class="d-flex align-items-center gap-2 mb-3 text-decoration-none" href="#home">
+                        <i class="fa-solid fa-leaf text-success fs-4"></i>
+                        <span class="fw-bold fs-4 text-white">Healthy<span class="text-emerald">Recipe</span> <span
+                                class="text-orange-accent">AI</span></span>
+                    </a>
+                    <p class="text-light-muted fs-7 mb-3">
+                        Aplikasi rekomendasi resep makanan sehat pintar berbasis AI dan database terverifikasi.
+                        Membantu mengurangi pemborosan bahan makanan di rumah dan menjaga gaya hidup sehat.
+                    </p>
+                    <div class="d-flex gap-3 text-light-muted fs-5">
+                        <a href="#" class="text-light-muted hover-emerald"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" class="text-light-muted hover-emerald"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1">
+                    <h6 class="fw-bold text-white mb-3">Navigasi Cepat</h6>
+                    <ul class="list-unstyled fs-7 d-flex flex-column gap-2 text-light-muted">
+                        <li><a href="#home" class="text-light-muted text-decoration-none hover-emerald">Home</a></li>
+                        <li><a href="#ai-recipe" class="text-light-muted text-decoration-none hover-emerald">AI
+                                Recipe</a></li>
+                        <li><a href="#about-me" class="text-light-muted text-decoration-none hover-emerald">About Me</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h6 class="fw-bold text-white mb-3">Pustaka Resep Sehat</h6>
+                    <p class="text-light-muted fs-7 mb-2">
+                        <i class="fa-solid fa-database text-emerald me-1"></i> Didukung oleh <strong>Pustaka Resep Sehat
+                            Terverifikasi</strong>.
+                    </p>
+                    <div class="badge bg-glass text-emerald border border-emerald p-2 text-wrap w-100 text-start fs-8">
+                        Fitur Nutri-Score & Perhitungan Kalori Otomatis.
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div
+                class="d-flex flex-column flex-sm-row justify-content-between align-items-center text-light-muted fs-7">
+                <span>&copy; 2026 Healthy Recipe AI. Hak Cipta Dilindungi.</span>
+                <span>Dibuat dengan <i class="fa-solid fa-heart text-danger"></i> untuk Pola Hidup Sehat.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 9. MODAL: LOCAL LOGIN                      -->
+    <!-- ========================================== -->
+    <div class="modal fade" id="localLoginModal" tabindex="-1" aria-labelledby="localLoginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content bg-dark-modal text-white border border-emerald border-opacity-50 rounded-4">
+                <div class="modal-header border-bottom border-secondary-subtle px-4 py-3">
+                    <h5 class="modal-title fw-bold text-white d-flex align-items-center gap-2"
+                        id="localLoginModalLabel">
+                        <i class="fa-solid fa-user-circle text-emerald"></i> Register / Login Akun
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="local-login-form">
+                        <div class="mb-3">
+                            <label for="login-username" class="form-label fw-semibold text-light">Username</label>
+                            <input type="text" class="form-control bg-glass text-white border-secondary shadow-none"
+                                id="login-username" placeholder="Masukkan username Anda..." required minlength="3">
+                        </div>
+                        <div class="mb-4">
+                            <label for="login-password" class="form-label fw-semibold text-light">Password</label>
+                            <input type="password" class="form-control bg-glass text-white border-secondary shadow-none"
+                                id="login-password" placeholder="Masukkan password Anda..." required minlength="4">
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-emerald rounded-pill px-5 py-2 fw-bold shadow">
+                                Login / Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5.3 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- AI Backend Service Module JS -->
+    <script src="apiService.js"></script>
+
+    <!-- Custom Script JS -->
+    <script src="script.js"></script>
+
+    <!-- Scroll to Top Button -->
+    <button id="btn-back-to-top" class="btn btn-emerald rounded-circle shadow"
+        style="position: fixed; bottom: 70px; right: 20px; z-index: 1029; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Fixed Footer -->
+    <div class="fixed-footer text-center py-2">
+        <span class="fs-7 fw-semibold"><i class="fa-solid fa-heart me-1 text-danger"></i>This belongs to Angie
+            &lt;3</span>
+    </div>
+</body>
+
+</html>
